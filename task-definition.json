@@ -1,0 +1,37 @@
+
+{
+  "family": "default-flask-aws-app-4afb",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "cpu": "1024",
+  "memory": "2048",
+  "executionRoleArn": "arn:aws:iam::243236149358:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "Main",
+      "image": "243236149358.dkr.ecr.us-east-1.amazonaws.com/flask-aws-app:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 5000,
+          "protocol": "tcp",
+          "name": "main-5000-tcp"
+        }
+      ],
+      "environment": [],
+      "mountPoints": [],
+      "volumesFrom": [],
+      "secrets": [],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/aws/ecs/default/flask-aws-app-4afb-c0b6",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}
