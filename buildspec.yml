@@ -11,7 +11,7 @@ phases:
   pre_build:
     commands:
       - python -m py_compile app.py
-      - python -c "from app import app; c = app.test_client(); r = c.get('/health'); assert r.status_code == 200; assert r.json['status'] == 'healthy'; print('Tests passed!')"
+      - python -c "from app import app; c = app.test_client(); r = c.get('/health'); assert r.status_code == 200; assert r.json['status'] == 'healthy'; print('Health test passed')"
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 243236149358.dkr.ecr.us-east-1.amazonaws.com
 
   build:
@@ -22,3 +22,8 @@ phases:
   post_build:
     commands:
       - docker push 243236149358.dkr.ecr.us-east-1.amazonaws.com/flask-aws-app:latest
+      - printf '[{"name":"Main","imageUri":"243236149358.dkr.ecr.us-east-1.amazonaws.com/flask-aws-app:latest"}]' > imagedefinitions.json
+
+artifacts:
+  files:
+    - imagedefinitions.json
